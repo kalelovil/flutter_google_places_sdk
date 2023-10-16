@@ -106,7 +106,8 @@ abstract class FlutterGooglePlacesSdkPlatform extends PlatformInterface {
 
   ///
   Future<FetchPlaceResponse> nearbySearch(
-    LatLng location, int radius {
+    LatLng location,
+    int radius, {
     required List<String> types,
     bool? newSessionToken,
   }) {
