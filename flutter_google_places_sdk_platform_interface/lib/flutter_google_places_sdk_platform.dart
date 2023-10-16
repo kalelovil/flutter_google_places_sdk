@@ -104,6 +104,15 @@ abstract class FlutterGooglePlacesSdkPlatform extends PlatformInterface {
     throw UnimplementedError('fetchPlaceDetails() has not been implemented.');
   }
 
+  ///
+  Future<FetchPlaceResponse> nearbySearch(
+    LatLng location, int radius {
+    required List<String> types,
+    bool? newSessionToken,
+  }) {
+    throw UnimplementedError('nearbySearch() has not been implemented.');
+  }
+
   /// Fetches a photo of a place.
   ///
   /// Before fetching a place photo the place it self must be fetched,

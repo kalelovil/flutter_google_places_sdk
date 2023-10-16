@@ -161,6 +161,23 @@ class FlutterGooglePlacesSdkWebPlugin extends FlutterGooglePlacesSdkPlatform {
     return FetchPlaceResponse(resp.place);
   }
 
+  @override
+  Future<FetchPlaceResponse> nearbySearch(
+    LatLng location, int radius {
+    required List<String> types,
+    bool? newSessionToken,
+  }) async {
+    final prom = _nearbySearch(PlaceSearchRequest()
+      ..location = location
+      ..radius = radius
+      ..types = types[0]
+      ..sessionToken = _lastSessionToken
+      ..language = _language);
+
+    final resp = await prom;
+    return FetchPlaceResponse(resp.place);
+  }
+
   String _mapField(PlaceField field) {
     switch (field) {
       case PlaceField.Address:
@@ -202,6 +219,18 @@ class FlutterGooglePlacesSdkWebPlugin extends FlutterGooglePlacesSdkPlatform {
     }
   }
 
+  Future<_NearbySearchResponse> _nearbySearch(PlaceSearchRequest request) {
+    final completer = Completer<_NearbySearchResponse>();
+
+    final func = (List<PlaceResult?>? places, PlacesServiceStatus? status) {
+      completer.complete(_NearbySearchResponse(_parsePlaces(places), status));
+    };
+
+    _svcPlaces!.nearbySearch(request, func);
+
+    return completer.future;
+  }
+
   Future<_GetDetailsResponse> _getDetails(PlaceDetailsRequest request) {
     final completer = Completer<_GetDetailsResponse>();
 
@@ -212,6 +241,14 @@ class FlutterGooglePlacesSdkWebPlugin extends FlutterGooglePlacesSdkPlatform {
     _svcPlaces!.getDetails(request, func);
 
     return completer.future;
+  }
+
+  List<inter.Place?>? _parsePlaces(List<PlaceResult?>? places) {
+    List<inter.Place?>? places = [];
+    for (int i = 0; i < places.length; i++) {
+      inter.Place? parsePlace = _parsePlace(places[i]);
+      places.add(parsePlace);
+    }
   }
 
   inter.Place? _parsePlace(PlaceResult? place) {
@@ -438,6 +475,18 @@ class _GetDetailsResponse {
 
   /// The place of the response.
   final inter.Place? place;
+
+  /// The status of the response.
+  final PlacesServiceStatus? status;
+}
+
+///
+class _NearbySearchResponse {
+  /// Construct a new response
+  const _NearbySearchResponse(this.places, this.status);
+
+  /// The places of the response.
+  final List<inter.Place?>? places;
 
   /// The status of the response.
   final PlacesServiceStatus? status;

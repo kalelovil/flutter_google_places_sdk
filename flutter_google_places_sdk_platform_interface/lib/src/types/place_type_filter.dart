@@ -28,7 +28,9 @@ enum PlaceTypeFilter {
   /// COUNTRY
   /// ADMINISTRATIVE_AREA_LEVEL_1
   /// ADMINISTRATIVE_AREA_LEVEL_2
-  REGIONS
+  REGIONS,
+
+  RESTAURANT,
   ;
 
   factory PlaceTypeFilter.fromJson(String name) {
@@ -53,6 +55,8 @@ enum PlaceTypeFilter {
         return 'geocode';
       case PlaceTypeFilter.REGIONS:
         return '(regions)';
+      case PlaceTypeFilter.RESTAURANT:
+        return 'restaurant';
     }
   }
 }

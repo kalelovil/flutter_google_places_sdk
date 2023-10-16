@@ -100,7 +100,8 @@ class FlutterGooglePlacesSdk {
     return _addMethodCall(() => platform.findAutocompletePredictions(
           query,
           countries: countries,
-          placeTypesFilter: placeTypesFilter.map((type) => type.apiExpectedValue).toList(),
+          placeTypesFilter:
+              placeTypesFilter.map((type) => type.apiExpectedValue).toList(),
           newSessionToken: newSessionToken,
           origin: origin,
           locationBias: locationBias,
@@ -118,6 +119,14 @@ class FlutterGooglePlacesSdk {
   Future<FetchPlaceResponse> fetchPlace(String placeId,
       {required List<PlaceField> fields}) {
     return _addMethodCall(() => platform.fetchPlace(placeId, fields: fields));
+  }
+
+  ///
+  Future<FetchPlaceResponse> nearbySearch(
+      LatLng location, int radius, List<String> types,
+      {required List<PlaceField> fields}) {
+    return _addMethodCall(
+        () => platform.nearbySearch(location, radius, types: types));
   }
 
   /// Fetches a photo of a place.
