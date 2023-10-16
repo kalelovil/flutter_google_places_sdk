@@ -163,7 +163,7 @@ class FlutterGooglePlacesSdkWebPlugin extends FlutterGooglePlacesSdkPlatform {
 
   @override
   Future<FetchPlaceResponse> nearbySearch(
-    LatLng location,
+    inter.LatLng location,
     int radius, {
     required List<String> types,
     bool? newSessionToken,
