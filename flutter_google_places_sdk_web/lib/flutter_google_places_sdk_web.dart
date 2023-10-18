@@ -162,7 +162,7 @@ class FlutterGooglePlacesSdkWebPlugin extends FlutterGooglePlacesSdkPlatform {
   }
 
   @override
-  Future<FetchPlaceResponse> nearbySearch(
+  Future<NearbySearchResponse> nearbySearch(
     inter.LatLng location,
     int radius, {
     required List<String> types,
@@ -176,7 +176,7 @@ class FlutterGooglePlacesSdkWebPlugin extends FlutterGooglePlacesSdkPlatform {
       ..language = _language);
 
     final resp = await prom;
-    return FetchPlaceResponse(resp.place);
+    return NearbySearchResponse(resp.places);
   }
 
   String _mapField(PlaceField field) {

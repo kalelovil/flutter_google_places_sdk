@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:js_interop';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -33,15 +34,16 @@ class FlutterGooglePlacesSdkMethodChannel
     return _invokeForSettings('updateSettings', apiKey, locale);
   }
 
-  Future<void> _invokeForSettings(String methodName, String apiKey, Locale? locale) {
+  Future<void> _invokeForSettings(
+      String methodName, String apiKey, Locale? locale) {
     return _channel.invokeMethod<void>(methodName, {
       'apiKey': apiKey,
       'locale': locale == null
           ? null
           : {
-        'country': locale.countryCode,
-        'language': locale.languageCode,
-      },
+              'country': locale.countryCode,
+              'language': locale.languageCode,
+            },
     });
   }
 
@@ -105,6 +107,24 @@ class FlutterGooglePlacesSdkMethodChannel
     final Place? place =
         value == null ? null : Place.fromJson(value.cast<String, dynamic>());
     return FetchPlaceResponse(place);
+  }
+
+  @override
+  Future<FetchPlaceResponse> nearbySearch(
+    LatLng location,
+    int radius, {
+    required List<String> types,
+    bool? newSessionToken,
+  }) {
+    return _channel.invokeMethod(
+      'nearbySearch',
+      {
+        'location': location.toJson(),
+        'radius': radius,
+        'types': types,
+        'newSessionToken': newSessionToken,
+      },
+    ).then(_responseFromPlacePhoto);
   }
 
   @override
