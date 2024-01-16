@@ -9,9 +9,9 @@ import 'dart:js_util';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_google_places_sdk_platform_interface/flutter_google_places_sdk_platform_interface.dart';
 import 'package:flutter_google_places_sdk_platform_interface/flutter_google_places_sdk_platform_interface.dart'
     as inter;
+import 'package:flutter_google_places_sdk_platform_interface/flutter_google_places_sdk_platform_interface.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:google_maps/google_maps.dart';
 import 'package:google_maps/google_maps.dart' as core;
@@ -169,10 +169,9 @@ class FlutterGooglePlacesSdkWebPlugin extends FlutterGooglePlacesSdkPlatform {
     bool? newSessionToken,
   }) async {
     final prom = _nearbySearch(PlaceSearchRequest()
-      ..location = location
+      ..location = _parseLatLang2(location)
       ..radius = radius
-      ..types = types[0]
-      ..sessionToken = _lastSessionToken
+      ..type = types[0]
       ..language = _language);
 
     final resp = await prom;
@@ -223,7 +222,8 @@ class FlutterGooglePlacesSdkWebPlugin extends FlutterGooglePlacesSdkPlatform {
   Future<_NearbySearchResponse> _nearbySearch(PlaceSearchRequest request) {
     final completer = Completer<_NearbySearchResponse>();
 
-    final func = (List<PlaceResult?>? places, PlacesServiceStatus? status) {
+    final func = (List<PlaceResult?>? places, PlacesServiceStatus? status,
+        PlaceSearchPagination? pages) {
       completer.complete(_NearbySearchResponse(_parsePlaces(places), status));
     };
 
@@ -245,11 +245,16 @@ class FlutterGooglePlacesSdkWebPlugin extends FlutterGooglePlacesSdkPlatform {
   }
 
   List<inter.Place?>? _parsePlaces(List<PlaceResult?>? places) {
-    List<inter.Place?>? places = [];
-    for (int i = 0; i < places.length; i++) {
-      inter.Place? parsePlace = _parsePlace(places[i]);
-      places.add(parsePlace);
+    if (places == null) {
+      return null;
     }
+
+    List<inter.Place?>? parsedPlaces = [];
+    for (int i = 0; i < places.length; i++) {
+      inter.Place? parsedPlace = _parsePlace(places[i]);
+      parsedPlaces.add(parsedPlace);
+    }
+    return parsedPlaces;
   }
 
   inter.Place? _parsePlace(PlaceResult? place) {
@@ -327,6 +332,17 @@ class FlutterGooglePlacesSdkWebPlugin extends FlutterGooglePlacesSdkPlatform {
     return inter.LatLng(
       lat: location.lat.toDouble(),
       lng: location.lng.toDouble(),
+    );
+  }
+
+  core.LatLng? _parseLatLang2(inter.LatLng? location) {
+    if (location == null) {
+      return null;
+    }
+
+    return core.LatLng(
+      location.lat.toDouble(),
+      location.lng.toDouble(),
     );
   }
 

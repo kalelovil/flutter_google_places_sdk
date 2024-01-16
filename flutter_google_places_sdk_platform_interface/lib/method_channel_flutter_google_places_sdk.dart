@@ -110,13 +110,13 @@ class FlutterGooglePlacesSdkMethodChannel
   }
 
   @override
-  Future<FetchPlaceResponse> nearbySearch(
+  Future<NearbySearchResponse> nearbySearch(
     LatLng location,
     int radius, {
     required List<String> types,
     bool? newSessionToken,
   }) {
-    return _channel.invokeMethod(
+    return _channel.invokeListMethod<Map<dynamic, dynamic>>(
       'nearbySearch',
       {
         'location': location.toJson(),
@@ -124,7 +124,18 @@ class FlutterGooglePlacesSdkMethodChannel
         'types': types,
         'newSessionToken': newSessionToken,
       },
-    ).then(_responseFromPlacePhoto);
+    ).then(_responseFromNearbySearch);
+  }
+
+  NearbySearchResponse _responseFromNearbySearch(
+    List<Map<dynamic, dynamic>>? value,
+  ) {
+    final items = value
+            ?.map((item) => item.cast<String, dynamic>())
+            .map((map) => Place.fromJson(map))
+            .toList(growable: false) ??
+        [];
+    return NearbySearchResponse(items);
   }
 
   @override

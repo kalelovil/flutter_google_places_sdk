@@ -1,3 +1,6 @@
+## 0.2.8
+
+
 ## 0.2.7
 
 * Now receiving an already converted string list for typesFilter in `findAutocompletePredictions`

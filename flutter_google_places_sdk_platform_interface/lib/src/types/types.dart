@@ -7,6 +7,7 @@ export 'fetch_place_response.dart';
 export 'find_autocomplete_predictions_response.dart';
 export 'lat_lng.dart';
 export 'lat_lng_bounds.dart';
+export 'nearby_search_response.dart';
 export 'opening_hours.dart';
 export 'period.dart';
 export 'photo_metadata.dart';
