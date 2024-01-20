@@ -121,7 +121,7 @@ class FlutterGooglePlacesSdk {
   }
 
   ///
-  Future<FetchPlaceResponse> nearbySearch(
+  Future<NearbySearchResponse> nearbySearch(
       LatLng location, int radius, List<String> types,
       {required List<PlaceField> fields}) {
     return _addMethodCall(
