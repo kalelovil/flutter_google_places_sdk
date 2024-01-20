@@ -3,11 +3,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_google_places_sdk/flutter_google_places_sdk.dart';
-import 'package:flutter_google_places_sdk_example/constants.dart';
-import 'package:flutter_google_places_sdk_example/google_places_img.dart'
+import 'package:flutter_google_places_sdk_platform_interface/flutter_google_places_sdk_platform_interface.dart';
+import 'constants.dart';
+import 'google_places_img.dart'
     if (dart.library.html) 'package:flutter_google_places_sdk_example/google_places_img_web.dart'
     as gpi;
-import 'package:flutter_google_places_sdk_example/settings_page.dart';
+import 'settings_page.dart';
 
 /// Title
 const title = 'Flutter Google Places SDK Example';
@@ -265,7 +266,8 @@ class _MyHomePageState extends State<MyHomePage> {
     final theme = Theme.of(context);
     final errorText = err == null ? '' : err.toString();
     return Text(errorText,
-        style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.error));
+        style: theme.textTheme.bodySmall
+            ?.copyWith(color: theme.colorScheme.error));
   }
 
   List<Widget> _buildFetchPlacePhotoWidgets() {
@@ -442,8 +444,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _openSettingsModal() {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => SettingsPage(_places)));
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => SettingsPage(_places)));
   }
 }
 

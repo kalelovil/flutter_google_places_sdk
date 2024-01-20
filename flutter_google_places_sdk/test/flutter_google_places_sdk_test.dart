@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show MethodCall, MethodChannel;
 import 'package:flutter_google_places_sdk/flutter_google_places_sdk.dart';
+import 'package:flutter_google_places_sdk_platform_interface/flutter_google_places_sdk_platform_interface.dart';
 import 'package:flutter_google_places_sdk_platform_interface/method_channel_flutter_google_places_sdk.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -28,7 +29,25 @@ void main() {
     fullText: 'ftext6cad',
   );
 
-  const kPlace = const Place(id: '', latLng: LatLng(lat: 542.13, lng: -32.43), address: '', addressComponents: [], businessStatus: null, attributions: [], name: '', openingHours: null, phoneNumber: '', photoMetadatas: [], plusCode: null, priceLevel: null, rating: null, types: [], userRatingsTotal: null, utcOffsetMinutes: null, viewport: null, websiteUri: null);
+  const kPlace = const Place(
+      id: '',
+      latLng: LatLng(lat: 542.13, lng: -32.43),
+      address: '',
+      addressComponents: [],
+      businessStatus: null,
+      attributions: [],
+      name: '',
+      openingHours: null,
+      phoneNumber: '',
+      photoMetadatas: [],
+      plusCode: null,
+      priceLevel: null,
+      rating: null,
+      types: [],
+      userRatingsTotal: null,
+      utcOffsetMinutes: null,
+      viewport: null,
+      websiteUri: null);
 
   final kDefaultResponses = <dynamic, dynamic>{
     'findAutocompletePredictions': <dynamic>[

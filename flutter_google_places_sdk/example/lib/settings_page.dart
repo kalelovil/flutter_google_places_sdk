@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_google_places_sdk/flutter_google_places_sdk.dart';
-import 'package:flutter_google_places_sdk_example/constants.dart';
+
+import 'constants.dart';
 
 /// Settings page of an example
 class SettingsPage extends StatefulWidget {
@@ -89,7 +90,8 @@ class _SettingsPageState extends State<SettingsPage> {
     setState(() {
       _updating = true;
     });
-    await widget.places.updateSettings(apiKey: _selectedKey, locale: _selectedLocale);
+    await widget.places
+        .updateSettings(apiKey: _selectedKey, locale: _selectedLocale);
     setState(() {
       _lastLocale = _selectedLocale;
       _lastKey = _selectedKey;

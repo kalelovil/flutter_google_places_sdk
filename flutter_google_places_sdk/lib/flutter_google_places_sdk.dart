@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_google_places_sdk_platform_interface/flutter_google_places_sdk_platform_interface.dart';
-export 'package:flutter_google_places_sdk_platform_interface/flutter_google_places_sdk_platform_interface.dart';
 
 /// Client used to call methods on the native google places sdk
 class FlutterGooglePlacesSdk {
