@@ -26,6 +26,10 @@ dependencies:
   flutter_google_places_sdk_platform_interface:
     path: ../flutter_google_places_sdk_platform_interface
 
+dependency_overrides:
+  flutter_google_places_sdk_ios:
+      path: ../flutter_google_places_sdk_ios
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
